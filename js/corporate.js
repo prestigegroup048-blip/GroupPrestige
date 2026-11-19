@@ -502,14 +502,11 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
     function calculate() {
-      let subtotal = (state.base + (state.surface * state.rate)) * state.freqMultiplier;
-      let min = Math.max(90, Math.round(subtotal * 0.9));
-      let max = Math.max(130, Math.round(subtotal * 1.15));
-
-      priceDisplay.textContent = `${min} € - ${max} € HTVA`;
-      return { min, max };
-
-  }
+      if (priceDisplay) {
+        priceDisplay.textContent = 'Tarif Personnalisé sous 2h';
+      }
+      return { type: state.type, surface: state.surface, freq: state.freqText };
+    }
 
     typeCards.forEach((card) => {
       card.addEventListener('click', () => {
@@ -585,15 +582,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const msg = 
 `Bonjour Samir (Group Prestige Services),
-Je souhaite recevoir un devis officiel suite à ma simulation sur votre site web :
+Je souhaite recevoir un devis personnalisé suite à ma demande sur votre site web :
 
 🏢 *Prestation* : ${state.type}
 📐 *Surface estimée* : ${state.surface} m²
 🔄 *Fréquence souhaitée* : ${state.freqText}
 📍 *Lieu en Belgique* : ${clientCommune}
-${clientName ? `👤 *Nom* : ${clientName}\n` : ''}${clientPhone ? `📞 *Tél* : ${clientPhone}\n` : ''}💰 *Estimation indicative* : ${quote.min} € à ${quote.max} € HTVA
-
-Pouvez-vous me recontacter pour confirmer l'intervention ? Merci !`;
+${clientName ? `👤 *Nom* : ${clientName}\n` : ''}${clientPhone ? `📞 *Tél* : ${clientPhone}\n` : ''}
+Pouvez-vous me recontacter avec votre meilleure proposition tarifaire ? Merci !`;
 
         const url = `https://wa.me/32492969996?text=${encodeURIComponent(msg)}`;
         window.open(url, '_blank');

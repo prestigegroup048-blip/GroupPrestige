@@ -146,7 +146,6 @@ Je souhaite recevoir un devis officiel suite à ma simulation sur votre site web
 📐 *Surface estimée* : ${state.surface} m²
 🔄 *Fréquence souhaitée* : ${state.frequencyLabel}
 ✨ *Options sélectionnées* : ${optionsText}
-💰 *Estimation indicative* : ${quote.minPrice} € - ${quote.maxPrice} € HTVA
 
 📍 *Lieu d'intervention* : Belgique (Liège & alentours)
 Pouvez-vous me confirmer vos disponibilités pour une intervention rapide ? Merci !`;
