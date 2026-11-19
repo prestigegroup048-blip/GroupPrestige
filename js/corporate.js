@@ -333,6 +333,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const baContainer = document.querySelector('.image-compare-wrapper');
   const baAfterLayer = document.querySelector('.compare-img-after-box');
   const baHandle = document.querySelector('.compare-handle');
+  const imgBefore = document.getElementById('img-before');
+  const imgAfter = document.getElementById('img-after');
 
   if (baContainer && baAfterLayer && baHandle) {
     let isDragging = false;
@@ -400,8 +402,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Scenario Tabs for Before/After
   const baTabs = document.querySelectorAll('.ba-tab');
-  const imgBefore = document.getElementById('img-before');
-  const imgAfter = document.getElementById('img-after');
 
   const baScenarios = {
     travaux: {
