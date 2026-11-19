@@ -9,4 +9,5 @@ test-*.png
 Thumbs.db
 .vscode/
 .idea/
+*.zip
 

@@ -109,19 +109,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropdownToggle = navMenu.querySelector('.nav-link-dropdown-toggle');
     const dropdownParent = dropdownToggle ? dropdownToggle.closest('.nav-item') : null;
     if (dropdownToggle && dropdownParent) {
-      // By default open the services accordion on mobile for discovery
-      dropdownParent.classList.add('dropdown-open');
-
       dropdownToggle.addEventListener('click', (e) => {
         if (window.innerWidth <= 860) {
           e.preventDefault();
           dropdownParent.classList.toggle('dropdown-open');
-  
-  }
-
-  });
-
-  }
+        }
+      });
+    }
 
     // Close drawer when clicking normal links
     navMenu.querySelectorAll('a').forEach((link) => {
