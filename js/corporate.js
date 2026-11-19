@@ -343,6 +343,21 @@ document.addEventListener('DOMContentLoaded', () => {
   if (baContainer && baAfterLayer && baHandle) {
     let isDragging = false;
 
+    function syncAfterImgWidth() {
+      if (baContainer && imgAfter) {
+        imgAfter.style.width = baContainer.offsetWidth + 'px';
+        imgAfter.style.maxWidth = 'none';
+        imgAfter.style.height = '100%';
+        imgAfter.style.objectFit = 'cover';
+      }
+    }
+    window.addEventListener('resize', syncAfterImgWidth);
+    window.addEventListener('orientationchange', () => setTimeout(syncAfterImgWidth, 100));
+    syncAfterImgWidth();
+    if (imgAfter) {
+      imgAfter.addEventListener('load', syncAfterImgWidth);
+    }
+
     function updateSlider(clientX) {
       const rect = baContainer.getBoundingClientRect();
       let x = clientX - rect.left;
@@ -351,8 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const pct = (x / rect.width) * 100;
       baAfterLayer.style.width = `${pct}%`;
       baHandle.style.left = `${pct}%`;
-
-  }
+    }
 
     baContainer.addEventListener('mousedown', (e) => {
       isDragging = true;
@@ -453,8 +467,8 @@ document.addEventListener('DOMContentLoaded', () => {
           imgAfter.src = baScenarios[scenario].after;
           imgBefore.style.opacity = '1';
           imgAfter.style.opacity = '1';
-  
-  }, 150);
+          if (typeof syncAfterImgWidth === 'function') syncAfterImgWidth();
+        }, 150);
 
   }
 

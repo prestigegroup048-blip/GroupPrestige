@@ -675,7 +675,7 @@
 
         <div class="ba-cards-gallery-grid">
           <div class="ba-card-item">
-            <img src="assets/images/ba-card-travaux.jpg" alt="Avant / Après Nettoyage Fin de Travaux et Chantier" loading="lazy">
+            <img src="assets/images/ba-card-travaux.jpg" alt="Avant / Après Nettoyage Fin de Travaux et Chantier">
             <div class="ba-card-caption">
               <h4>Nettoyage Après Travaux & Chantier</h4>
               <p>Élimination radicale des poussières de plâtre et résidus de colle.</p>
@@ -683,7 +683,7 @@
           </div>
 
           <div class="ba-card-item">
-            <img src="assets/images/ba-card-vitres.jpg" alt="Avant / Après Lavage de Vitres et Baies Vitrées" loading="lazy">
+            <img src="assets/images/ba-card-vitres.jpg" alt="Avant / Après Lavage de Vitres et Baies Vitrées">
             <div class="ba-card-caption">
               <h4>Vitrages & Baies Coulissantes</h4>
               <p>Clarté limpide sans traces intérieures ni extérieures.</p>
@@ -691,7 +691,7 @@
           </div>
 
           <div class="ba-card-item">
-            <img src="assets/images/ba-card-bureaux.jpg" alt="Avant / Après Bureaux et Espaces Professionnels" loading="lazy">
+            <img src="assets/images/ba-card-bureaux.jpg" alt="Avant / Après Bureaux et Espaces Professionnels">
             <div class="ba-card-caption">
               <h4>Bureaux & Open Spaces</h4>
               <p>Désinfection des postes, sols lustrés et locaux hygiénisés.</p>
@@ -699,7 +699,7 @@
           </div>
 
           <div class="ba-card-item">
-            <img src="assets/images/ba-card-residentiel.jpg" alt="Avant / Après Résidentiel et Cuisines" loading="lazy">
+            <img src="assets/images/ba-card-residentiel.jpg" alt="Avant / Après Résidentiel et Cuisines">
             <div class="ba-card-caption">
               <h4>Résidences & Cuisines Équipées</h4>
               <p>Dégraissage haute performance et remise à neuf complète.</p>
@@ -707,7 +707,7 @@
           </div>
 
           <div class="ba-card-item">
-            <img src="assets/images/ba-card-copropriete.jpg" alt="Avant / Après Copropriétés et Cages d'Escaliers" loading="lazy">
+            <img src="assets/images/ba-card-copropriete.jpg" alt="Avant / Après Copropriétés et Cages d'Escaliers">
             <div class="ba-card-caption">
               <h4>Copropriétés & Escaliers</h4>
               <p>Maintien du standing et valorisation des parties communes.</p>
@@ -715,7 +715,7 @@
           </div>
 
           <div class="ba-card-item">
-            <img src="assets/images/ba-card-incendie.jpg" alt="Avant / Après Sinistres et Nettoyage Après Incendie" loading="lazy">
+            <img src="assets/images/ba-card-incendie.jpg" alt="Avant / Après Sinistres et Nettoyage Après Incendie">
             <div class="ba-card-caption">
               <h4>Sinistres & Après Incendie</h4>
               <p>Décontamination de la suie et neutralisation des odeurs.</p>
@@ -776,14 +776,14 @@
           </h3>
           <div class="surface-slider-box">
             <div class="slider-val-display">
-              <span style="font-weight: 600; color: var(--text-muted);">Superficie en mètres carrés</span>
+              <span class="slider-val-label">Superficie en mètres carrés</span>
               <div class="slider-val-number" id="surface-val-display">120 m²</div>
             </div>
             <input type="range" min="30" max="600" step="10" value="120" class="surface-range-input" id="surface-range">
-            <div style="display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-muted); margin-top: 0.75rem;">
-              <span>Studio / Petit local (30 m²)</span>
-              <span>Maison / Surface moyenne (150 m²)</span>
-              <span>Grandes surfaces (600+ m²)</span>
+            <div class="surface-quick-labels">
+              <span><strong>30 m²</strong> <small>(Studio/Local)</small></span>
+              <span><strong>150 m²</strong> <small>(Maison/Pro)</small></span>
+              <span><strong>600+ m²</strong> <small>(Grande Surface)</small></span>
             </div>
           </div>
         </div>
@@ -803,20 +803,20 @@
 
         <!-- Result Box -->
         <div class="calc-result-box">
-          <div>
-            <span style="font-size: 0.85rem; text-transform: uppercase; color: rgba(255,255,255,0.7); letter-spacing: 0.05em;">Estimation indicative immédiate</span>
+          <div class="calc-result-info">
+            <span class="calc-result-badge">Estimation indicative immédiate</span>
             <div class="estimate-price-range" id="estimate-price-display">180 € - 230 € HTVA</div>
-            <div style="font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-top: 0.25rem;">
+            <div class="calc-result-note">
               <i class="fa-solid fa-circle-info"></i> Tarif sans engagement, validé après échange rapide ou visite technique gratuite.
             </div>
           </div>
 
-          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <button class="btn btn-whatsapp" id="btn-calc-whatsapp" style="padding: 1rem 1.8rem;">
+          <div class="calc-actions-group">
+            <button class="btn btn-whatsapp calc-btn-whatsapp" id="btn-calc-whatsapp">
               <i class="fa-brands fa-whatsapp fa-lg"></i>
               <span>Envoyer sur WhatsApp direct</span>
             </button>
-            <a href="tel:+32492969996" class="btn btn-outline-white" style="padding: 1rem 1.5rem;">
+            <a href="tel:+32492969996" class="btn btn-outline-white calc-btn-phone">
               <i class="fa-solid fa-phone"></i>
               <span>0492 96 99 96</span>
             </a>

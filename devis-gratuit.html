@@ -234,10 +234,10 @@
               <strong id="devis-surface-number">100 m²</strong>
             </div>
             <input type="range" min="30" max="600" step="10" value="100" class="corporate-range" id="devis-surface-range">
-            <div style="display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-muted); margin-top: 0.75rem;">
-              <span>Studio / Petit local (30 m²)</span>
-              <span>Maison / Bureaux (150 m²)</span>
-              <span>Grandes surfaces (600+ m²)</span>
+            <div class="surface-quick-labels">
+              <span><strong>30 m²</strong> <small>(Studio/Local)</small></span>
+              <span><strong>150 m²</strong> <small>(Maison/Pro)</small></span>
+              <span><strong>600+ m²</strong> <small>(Grande Surface)</small></span>
             </div>
           </div>
         </div>
@@ -262,7 +262,7 @@
           <h3 class="devis-step-title">
             <span class="step-badge">4</span> Vos coordonnées pour recevoir l'offre
           </h3>
-          <div class="form-row-2col" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div class="form-row-2col">
             <div class="form-group-field">
               <label>Nom ou Raison Sociale *</label>
               <input type="text" id="devis-client-name" class="form-input-control" placeholder="Ex: Entreprise Martin ou Jean Dupont" required>
@@ -280,20 +280,20 @@
 
         <!-- Estimation Banner -->
         <div class="estimate-result-banner">
-          <div>
-            <h4>Estimation indicative immédiate</h4>
+          <div class="calc-result-info">
+            <span class="calc-result-badge">Estimation indicative immédiate</span>
             <div class="estimate-price-tag" id="devis-price-result">160 € - 210 € HTVA</div>
-            <div style="font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-top: 0.35rem;">
+            <div class="calc-result-note">
               <i class="fa-solid fa-circle-info"></i> Tarif sans engagement, validé après échange rapide ou visite technique gratuite.
             </div>
           </div>
 
-          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <button class="btn btn-whatsapp" id="btn-devis-whatsapp" style="padding: 1rem 1.8rem; font-size: 0.95rem;">
+          <div class="calc-actions-group">
+            <button class="btn btn-whatsapp calc-btn-whatsapp" id="btn-devis-whatsapp">
               <i class="fa-brands fa-whatsapp fa-lg"></i>
               <span>Envoyer sur WhatsApp direct</span>
             </button>
-            <a href="tel:+32492969996" class="btn btn-outline-white" style="padding: 1rem 1.5rem; font-size: 0.95rem;">
+            <a href="tel:+32492969996" class="btn btn-outline-white calc-btn-phone">
               <i class="fa-solid fa-phone"></i>
               <span>Appeler Samir : 0492 96 99 96</span>
             </a>
