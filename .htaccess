@@ -1,0 +1,104 @@
+# ==============================================================================
+# GROUP PRESTIGE SERVICES SRL - Configuration Apache .htaccess
+# Optimisé pour One.com : Sécurité, Performance (Gzip/Cache) et SEO Canonique
+# ==============================================================================
+
+# 1. Activation du moteur de réécriture
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # ----------------------------------------------------------------------------
+  # A. Forcer HTTPS & Redirection www vers domaine canonique (https://groupprestiges.be)
+  # Évite le contenu dupliqué SEO et garantit le cadenas vert de sécurité SSL
+  # ----------------------------------------------------------------------------
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} ^www\.groupprestiges\.be$ [NC]
+  RewriteRule ^(.*)$ https://groupprestiges.be/$1 [L,R=301]
+
+  # ----------------------------------------------------------------------------
+  # B. Redirection propre de /index.html vers la racine /
+  # ----------------------------------------------------------------------------
+  RewriteCond %{THE_REQUEST} ^.*/index\.html [NC]
+  RewriteRule ^(.*)index\.html$ /$1 [R=301,L]
+
+  # ----------------------------------------------------------------------------
+  # C. URLs Propres : permet d'accéder à /a-propos sans taper /a-propos.html
+  # ----------------------------------------------------------------------------
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}\.html -f
+  RewriteRule ^([^\.]+)$ $1.html [NC,L]
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# 2. Sécurité & En-têtes HTTP
+# ------------------------------------------------------------------------------
+<IfModule mod_headers.c>
+  # Protection contre le MIME-sniffing
+  Header always set X-Content-Type-Options "nosniff"
+  # Protection contre le Clickjacking (intégration iframe)
+  Header always set X-Frame-Options "SAMEORIGIN"
+  # Protection XSS
+  Header always set X-XSS-Protection "1; mode=block"
+  # Politique de Referrer
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Bloquer l'accès aux fichiers sensibles et dossiers cachés (.git, .env, etc.)
+<FilesMatch "^\.">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# ------------------------------------------------------------------------------
+# 3. Compression GZIP / DEFLATE (Accélération Google PageSpeed)
+# ------------------------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE application/xhtml+xml
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# 4. Mise en cache navigateur (Browser Caching / Expire Headers)
+# ------------------------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+
+  # HTML : 1 heure (pour voir les mises à jour rapidement)
+  ExpiresByType text/html "access plus 1 hour"
+
+  # CSS et JavaScript : 1 an
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType application/x-javascript "access plus 1 year"
+
+  # Images et Favicons : 1 an
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+
+  # Polices web : 1 an
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType application/font-woff "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# 5. Page d'erreur 404 (Redirection fluide vers l'accueil)
+# ------------------------------------------------------------------------------
+ErrorDocument 404 /index.html
