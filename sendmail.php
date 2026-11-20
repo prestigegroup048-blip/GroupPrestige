@@ -199,3 +199,4 @@ if ($sent) {
         'message' => 'Erreur technique lors de l\'envoi direct. Veuillez utiliser WhatsApp au +32 492 96 99 96 ou nous écrire à info@groupprestiges.be.'
     ]);
 }
+
