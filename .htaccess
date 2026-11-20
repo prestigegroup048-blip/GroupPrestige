@@ -102,3 +102,4 @@
 # 5. Page d'erreur 404 (Redirection fluide vers l'accueil)
 # ------------------------------------------------------------------------------
 ErrorDocument 404 /index.html
+

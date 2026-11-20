@@ -586,10 +586,64 @@ Pouvez-vous me recontacter avec votre proposition adaptée ? Merci !`;
 
         const url = `https://wa.me/32492969996?text=${encodeURIComponent(msg)}`;
         window.open(url, '_blank');
+      });
+    }
 
-  });
+    // Gestion de l'envoi par Email depuis le simulateur (sendmail.php)
+    const btnEmail = document.getElementById(config.emailBtnId || 'btn-calc-email');
+    if (btnEmail) {
+      btnEmail.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const clientName = document.getElementById('calc-client-name')?.value || document.getElementById('devis-client-name')?.value || '';
+        const clientPhone = document.getElementById('calc-client-phone')?.value || document.getElementById('devis-client-phone')?.value || '';
+        const clientCommune = document.getElementById('calc-client-commune')?.value || document.getElementById('devis-client-commune')?.value || 'Province de Liège';
+        const clientEmail = document.getElementById('calc-client-email')?.value || document.getElementById('devis-client-email')?.value || '';
 
-  }
+        if (!clientName || (!clientPhone && !clientEmail)) {
+          alert('Veuillez renseigner votre nom ainsi qu\'un numéro de téléphone ou un email dans les champs prévus pour recevoir votre devis chiffré.');
+          const nameInput = document.getElementById('calc-client-name') || document.getElementById('devis-client-name');
+          if (nameInput) {
+            nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            nameInput.focus();
+            nameInput.style.borderColor = '#0070f3';
+          }
+          return;
+        }
+
+        const originalBtnHtml = btnEmail.innerHTML;
+        btnEmail.disabled = true;
+        btnEmail.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours...';
+
+        const formData = new FormData();
+        formData.append('form_source', 'Simulateur de Devis en ligne');
+        formData.append('name', clientName);
+        formData.append('phone', clientPhone);
+        formData.append('email', clientEmail);
+        formData.append('service', state.type);
+        formData.append('surface', state.surface);
+        formData.append('frequency', state.freqText);
+        formData.append('commune', clientCommune);
+        formData.append('message', `Simulation réalisée : ${state.type} - Surface : ${state.surface} m² - Fréquence : ${state.freqText} - Commune : ${clientCommune}`);
+
+        try {
+          const res = await fetch('sendmail.php', { method: 'POST', body: formData });
+          const json = await res.json().catch(() => null);
+
+          if (res.ok && json && json.status === 'success') {
+            alert(`✅ Merci ${clientName} ! Votre demande de devis a été transmise directement à info@groupprestiges.be. Samir CHIHAB l\'étudie et vous répondra sous 24h.`);
+          } else {
+            throw new Error(json?.message || 'Erreur d\'envoi');
+          }
+        } catch (err) {
+          console.warn('Envoi email simulateur en échec, proposition WhatsApp:', err);
+          alert(`Votre demande a été préparée sur WhatsApp pour un contact direct avec Samir CHIHAB.`);
+          btnWhatsApp?.click();
+        } finally {
+          btnEmail.disabled = false;
+          btnEmail.innerHTML = originalBtnHtml;
+        }
+      });
+    }
 
     calculate();
 
@@ -602,7 +656,8 @@ Pouvez-vous me recontacter avec votre proposition adaptée ? Merci !`;
     displayId: 'surface-val-display',
     freqId: 'freq-select',
     priceId: 'estimate-price-display',
-    btnId: 'btn-calc-whatsapp'
+    btnId: 'btn-calc-whatsapp',
+    emailBtnId: 'btn-calc-email'
 
   });
 
@@ -613,15 +668,21 @@ Pouvez-vous me recontacter avec votre proposition adaptée ? Merci !`;
     displayId: 'devis-surface-number',
     freqId: 'devis-freq-select',
     priceId: 'devis-price-result',
-    btnId: 'btn-devis-whatsapp'
+    btnId: 'btn-devis-whatsapp',
+    emailBtnId: 'btn-devis-email'
 
   });
 
   // 5. Contact Form Submissions
+  // 5. Contact Form Submissions (Envoi Email via sendmail.php + Fallback WhatsApp)
   const forms = document.querySelectorAll('.corporate-contact-form');
   forms.forEach((form) => {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+      
       const name = form.querySelector('[name="name"]')?.value || '';
       const phone = form.querySelector('[name="phone"]')?.value || '';
       const email = form.querySelector('[name="email"]')?.value || '';
@@ -630,7 +691,7 @@ Pouvez-vous me recontacter avec votre proposition adaptée ? Merci !`;
 
       const waMsg = 
 `Bonjour Group Prestige Services,
-Nouvelle demande de devis via votre formulaire :
+Nouvelle demande de devis via votre site internet :
 
 👤 *Nom* : ${name}
 📞 *Téléphone* : ${phone}
@@ -638,13 +699,65 @@ Nouvelle demande de devis via votre formulaire :
 📋 *Service concerné* : ${service}
 💬 *Détails* :
 ${message}`;
-
       const waUrl = `https://wa.me/32492969996?text=${encodeURIComponent(waMsg)}`;
-      window.open(waUrl, '_blank');
-      alert(`Merci ${name} ! Votre demande a été préparée pour un envoi immédiat sur notre WhatsApp officiel (+32 492 96 99 96). Nous vous répondrons dans les plus brefs délais.`);
 
-  });
+      // Afficher l'état de chargement
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Transmission en cours...';
+      }
 
+      // Préparation des données FormData pour sendmail.php
+      const formData = new FormData(form);
+      formData.append('form_source', 'Page Contact (Formulaire Principal)');
+
+      try {
+        const response = await fetch('sendmail.php', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json().catch(() => null);
+
+        if (response.ok && result && result.status === 'success') {
+          // Affichage bannière de confirmation
+          let alertBox = form.querySelector('.form-alert-feedback');
+          if (!alertBox) {
+            alertBox = document.createElement('div');
+            alertBox.className = 'form-alert-feedback';
+            form.prepend(alertBox);
+          }
+          alertBox.style.cssText = 'background: #f0fdf4; border: 1px solid #86efac; border-left: 5px solid #22c55e; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; text-align: left;';
+          alertBox.innerHTML = `
+            <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+              <i class="fa-solid fa-circle-check" style="color: #16a34a; font-size: 1.4rem; margin-top: 2px;"></i>
+              <div>
+                <strong style="color: #15803d; font-size: 1.05rem; display: block; margin-bottom: 0.25rem;">Demande envoyée avec succès !</strong>
+                <p style="color: #166534; font-size: 0.9rem; margin: 0 0 0.85rem; line-height: 1.6;">
+                  Merci <strong>${name}</strong>. Votre demande a bien été transmise à <strong>info@groupprestiges.be</strong>. Samir CHIHAB l'étudie personnellement et vous recontactera sous 24h ouvrées.
+                </p>
+                <a href="${waUrl}" target="_blank" style="display: inline-flex; align-items: center; gap: 0.45rem; background: #25d366; color: #ffffff; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.82rem; font-weight: 700;">
+                  <i class="fa-brands fa-whatsapp"></i> Échanger également sur WhatsApp direct
+                </a>
+              </div>
+            </div>
+          `;
+          form.reset();
+        } else {
+          throw new Error(result?.message || 'Erreur serveur');
+        }
+      } catch (err) {
+        console.warn('Envoi direct email non abouti, basculement WhatsApp:', err);
+        // Fallback WhatsApp
+        window.open(waUrl, '_blank');
+        alert(`Merci ${name} ! Votre demande a été préparée et s'ouvre sur WhatsApp pour Samir CHIHAB (+32 492 96 99 96).`);
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnHtml;
+        }
+      }
+    });
   });
 
   // 6. Animated Statistics
