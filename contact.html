@@ -23,11 +23,11 @@
       <div class="top-header-left">
         <div class="top-header-item">
           <i class="fa-regular fa-clock"></i>
-          <span>Lun - Ven : 08h00 - 18h00 &bull; Sam : 08h00 - 12h00</span>
+          <span> Lun - Ven : 08h00 - 18h00 &bull; Sam : 08h00 - 12h00 &bull; Dim : Fermé</span>
         </div>
         <div class="top-header-item">
-          <i class="fa-solid fa-bolt"></i>
-          <span>Intervention rapide & Devis sous 2h</span>
+          <i class="fa-solid fa-shield-check"></i>
+          <span> Entreprise déclarée & assurée &bull; Liège & Wallonie</span>
         </div>
       </div>
       <div class="top-header-right">
@@ -147,10 +147,10 @@
               <i class="fa-solid fa-phone"></i>
               <span>04 362 66 18</span>
             </a>
-            <span class="drawer-hours">Lun - Sam : 08h - 18h</span>
+            <span class="drawer-hours">Lun - Ven : 08h - 18h | Sam : 08h - 12h | Dim : Fermé</span>
           </div>
           <div class="drawer-badge-tag">
-            <i class="fa-solid fa-shield-halved"></i> Agrément Officiel • Liège & Wallonie
+            <i class="fa-solid fa-shield-check"></i> Entreprise déclarée & assurée • Liège & Wallonie
           </div>
         </div>
       </nav>
@@ -253,13 +253,13 @@
               </div>
             </div>
 
-            <!-- Agrément -->
+            <!-- Structure Légale -->
             <div style="display: flex; gap: 1rem; align-items: flex-start;">
               <div style="width: 44px; height: 44px; border-radius: 10px; background: #fef3c7; color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">
                 <i class="fa-solid fa-id-card"></i>
               </div>
               <div>
-                <div style="font-size: 0.78rem; text-transform: uppercase; color: var(--gold); font-weight: 800; letter-spacing: 0.05em;">Structure Légale Agréée</div>
+                <div style="font-size: 0.78rem; text-transform: uppercase; color: var(--gold); font-weight: 800; letter-spacing: 0.05em;">Structure Légale Déclarée (SRL)</div>
                 <div style="color: var(--navy); font-weight: 700; font-size: 0.95rem;">Gérance : Samir CHIHAB</div>
                 <div style="font-size: 0.85rem; color: var(--text-muted);">Numéro TVA : BE 1035.365.627</div>
               </div>
@@ -282,8 +282,8 @@
                   <td>08:00 - 12:00</td>
                 </tr>
                 <tr>
-                  <td>Dimanche & Sinistres</td>
-                  <td>Astreinte 24/7</td>
+                  <td>Dimanche</td>
+                  <td>Fermé</td>
                 </tr>
               </tbody>
             </table>
@@ -297,7 +297,7 @@
             Envoyez votre <span>Demande</span>
           </h2>
           <p style="color: var(--text-body); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.8rem;">
-            Remplissez ce formulaire et recevez une estimation claire sous 2 heures ouvrées.
+            Remplissez ce formulaire et recevez une estimation claire rapidement sans engagement.
           </p>
 
           <form class="corporate-contact-form" style="display: flex; flex-direction: column; gap: 1rem;">
@@ -320,12 +320,14 @@
               <div class="form-group-field">
                 <label>Prestation souhaitée</label>
                 <select name="service" class="form-input-control">
-                  <option value="Bureaux & Commerces">Nettoyage régulier de bureaux</option>
+                  <option value="Bureaux & Commerces">Nettoyage régulier de bureaux & commerces</option>
+                  <option value="Cabinets Médicaux & Dentaires">Cabinets médicaux & dentaires</option>
                   <option value="Immeubles & Copropriétés">Parties communes & copropriétés</option>
-                  <option value="Résidences & Maisons">Maison / Appartement / Grand ménage</option>
                   <option value="Après Chantier">Fin de chantier / Rénovation</option>
-                  <option value="Vitres & Châssis">Vitres & Baies (grande hauteur)</option>
-                  <option value="Sols Monobrosse">Décapage & Lustrage des sols</option>
+                  <option value="Vitres & Châssis">Vitres & Châssis (toutes hauteurs)</option>
+                  <option value="Après Sinistre">Nettoyage après sinistre</option>
+                  <option value="Résidences & Maisons">Maison / Appartement / Grand ménage</option>
+                  <option value="Sous-traitance Partenaire">Sous-traitance pour entreprise de nettoyage</option>
                   <option value="Autre">Autre demande spécifique</option>
                 </select>
               </div>
@@ -334,6 +336,13 @@
             <div class="form-group-field">
               <label>Message ou description de vos locaux *</label>
               <textarea name="message" class="form-input-control" rows="4" placeholder="Indiquez la superficie estimée (m²), la commune en Belgique et les détails utiles..." required></textarea>
+            </div>
+
+            <div style="font-size: 0.82rem; color: #64748b; margin-top: 0.25rem;">
+              <label style="display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer;">
+                <input type="checkbox" required style="margin-top: 3px;">
+                <span>J'accepte que mes données soient traitées par GROUP PRESTIGE SERVICES SRL pour me recontacter conformément à la <a href="politique-confidentialite.html" target="_blank" style="color: var(--primary); text-decoration: underline;">Politique de Confidentialité</a>.</span>
+              </label>
             </div>
 
             <button type="submit" class="btn btn-orange" style="width: 100%; justify-content: center; padding: 1rem; font-size: 1rem; margin-top: 0.5rem;">
@@ -440,10 +449,10 @@
     </div>
 
     <div class="footer-bottom-bar">
-      <div>&copy; 2026 Group Prestige Services &bull; Tous droits réservés.</div>
+      <div>&copy; 2026 GROUP PRESTIGE SERVICES SRL &bull; Tous droits réservés.</div>
       <div>
-        <a href="contact.html">Mentions Légales</a> &bull; 
-        <a href="contact.html">Politique de Confidentialité</a>
+        <a href="mentions-legales.html">Mentions Légales</a> &bull; 
+        <a href="politique-confidentialite.html">Politique de Confidentialité</a>
       </div>
     </div>
   </footer>

@@ -482,28 +482,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!rangeInput || !priceDisplay) return;
 
     let state = {
-      type: 'Maison / Villa',
-      rate: 2.2,
-      base: 60,
+      type: 'Bureaux & Locaux Pro',
       surface: parseInt(rangeInput.value, 10) || 120,
-      freqMultiplier: 1.0,
       freqText: 'Intervention ponctuelle'
+    };
 
-  };
-
-    const typeRates = {
-      'residentiel': { name: 'Maison / Villa', rate: 2.2, base: 60 },
-      'bureaux': { name: 'Bureaux & Commerces', rate: 1.8, base: 70 },
-      'copropriete': { name: 'Copropriété / Immeuble', rate: 1.6, base: 60 },
-      'chantier': { name: 'Après Chantier', rate: 3.2, base: 110 },
-      'vitres': { name: 'Vitres & Façades', rate: 2.0, base: 50 },
-      'terrasse': { name: 'Terrasse Haute Pression', rate: 2.4, base: 65 }
-
-  };
+    const typeNames = {
+      'bureaux': 'Nettoyage Bureaux & Locaux Pro',
+      'medical': 'Cabinets Médicaux & Dentaires',
+      'copropriete': 'Copropriétés & Communs d\'Immeubles',
+      'copro': 'Copropriétés & Communs d\'Immeubles',
+      'chantier': 'Après Travaux & Fin de Chantier',
+      'vitres': 'Lavage de Vitres & Châssis',
+      'sinistres': 'Nettoyage Après Sinistre',
+      'residentiel': 'Maisons & Appartements (Résidentiel)',
+      'soustraitance': 'Sous-traitance Partenaire'
+    };
 
     function calculate() {
       if (priceDisplay) {
-        priceDisplay.textContent = 'Tarif Personnalisé sous 2h';
+        priceDisplay.textContent = '« Recevez votre devis gratuit et personnalisé, sans engagement. »';
       }
       return { type: state.type, surface: state.surface, freq: state.freqText };
     }
@@ -513,28 +511,22 @@ document.addEventListener('DOMContentLoaded', () => {
         typeCards.forEach((c) => {
           c.classList.remove('active');
           c.classList.remove('selected');
-  
-  });
+        });
         card.classList.add('active');
         card.classList.add('selected');
 
-        const key = card.getAttribute('data-type') || 'residentiel';
-        if (typeRates[key]) {
-          state.type = typeRates[key].name;
-          state.rate = typeRates[key].rate;
-          state.base = typeRates[key].base;
-  
-  } else if (card.getAttribute('data-type-name')) {
+        const key = card.getAttribute('data-type') || 'bureaux';
+        if (typeNames[key]) {
+          state.type = typeNames[key];
+        } else if (card.getAttribute('data-type-name')) {
           state.type = card.getAttribute('data-type-name');
-          state.rate = parseFloat(card.getAttribute('data-rate') || '2.0');
-          state.base = parseFloat(card.getAttribute('data-base') || '60');
-  
-  }
+        } else {
+          const titleEl = card.querySelector('.calc-type-name, .option-choice-title, strong');
+          if (titleEl) state.type = titleEl.textContent.trim();
+        }
         calculate();
-
-  });
-
-  });
+      });
+    });
 
     rangeInput.addEventListener('input', () => {
       state.surface = parseInt(rangeInput.value, 10);
@@ -576,20 +568,21 @@ document.addEventListener('DOMContentLoaded', () => {
       btnWhatsApp.addEventListener('click', (e) => {
         e.preventDefault();
         const quote = calculate();
-        const clientName = document.getElementById('devis-client-name')?.value || '';
-        const clientPhone = document.getElementById('devis-client-phone')?.value || '';
-        const clientCommune = document.getElementById('devis-client-commune')?.value || 'Liège et ses environs';
+        const clientName = document.getElementById('calc-client-name')?.value || document.getElementById('devis-client-name')?.value || '';
+        const clientPhone = document.getElementById('calc-client-phone')?.value || document.getElementById('devis-client-phone')?.value || '';
+        const clientCommune = document.getElementById('calc-client-commune')?.value || document.getElementById('devis-client-commune')?.value || 'Province de Liège / Wallonie';
+        const clientEmail = document.getElementById('calc-client-email')?.value || document.getElementById('devis-client-email')?.value || '';
 
         const msg = 
-`Bonjour Samir (Group Prestige Services),
-Je souhaite recevoir un devis personnalisé suite à ma demande sur votre site web :
+`Bonjour Samir (GROUP PRESTIGE SERVICES SRL),
+Je souhaite recevoir un devis gratuit et personnalisé suite à ma demande sur votre site web :
 
 🏢 *Prestation* : ${state.type}
 📐 *Surface estimée* : ${state.surface} m²
 🔄 *Fréquence souhaitée* : ${state.freqText}
-📍 *Lieu en Belgique* : ${clientCommune}
-${clientName ? `👤 *Nom* : ${clientName}\n` : ''}${clientPhone ? `📞 *Tél* : ${clientPhone}\n` : ''}
-Pouvez-vous me recontacter avec votre meilleure proposition tarifaire ? Merci !`;
+📍 *Ville / Commune* : ${clientCommune}
+${clientName ? `👤 *Nom / Société* : ${clientName}\n` : ''}${clientPhone ? `📞 *Tél* : ${clientPhone}\n` : ''}${clientEmail ? `✉️ *Email* : ${clientEmail}\n` : ''}
+Pouvez-vous me recontacter avec votre proposition adaptée ? Merci !`;
 
         const url = `https://wa.me/32492969996?text=${encodeURIComponent(msg)}`;
         window.open(url, '_blank');
@@ -648,7 +641,7 @@ ${message}`;
 
       const waUrl = `https://wa.me/32492969996?text=${encodeURIComponent(waMsg)}`;
       window.open(waUrl, '_blank');
-      alert(`Merci ${name} ! Votre demande a été préparée pour un envoi immédiat sur notre WhatsApp officiel (+32 492 96 99 96). Nous vous répondons sous 2h.`);
+      alert(`Merci ${name} ! Votre demande a été préparée pour un envoi immédiat sur notre WhatsApp officiel (+32 492 96 99 96). Nous vous répondrons dans les plus brefs délais.`);
 
   });
 
